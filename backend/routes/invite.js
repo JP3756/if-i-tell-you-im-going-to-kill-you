@@ -46,8 +46,8 @@ router.post('/generate', (req, res) => {
         inviteToken,
         inviteUrl,
         qrCode: qrDataUrl,
-        message: 'Single-use QR invitation created. Share this with one person.',
-        expiresAfterUse: true
+        message: 'Reusable QR invitation created. Share this with multiple people.',
+        expiresAfterUse: false
       });
     });
 
@@ -67,13 +67,13 @@ router.post('/validate', (req, res) => {
       return res.status(400).json({ error: 'Invitation token required' });
     }
 
-    // Check if token exists and is not used
-    const stmt = db.prepare('SELECT * FROM invite_tokens WHERE token = ? AND used = 0');
+    // Check if token exists (REUSABLE - no longer checking if used)
+    const stmt = db.prepare('SELECT * FROM invite_tokens WHERE token = ?');
     const invite = stmt.get(token);
 
     if (!invite) {
       return res.status(403).json({ 
-        error: 'Invalid or already used invitation',
+        error: 'Invalid invitation token',
         valid: false 
       });
     }

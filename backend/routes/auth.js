@@ -27,12 +27,12 @@ router.post('/signup', (req, res) => {
       });
     }
 
-    // Check if invite token is valid and unused
-    const inviteStmt = db.prepare('SELECT * FROM invite_tokens WHERE token = ? AND used = 0');
+    // Check if invite token is valid (REUSABLE - no longer checking if unused)
+    const inviteStmt = db.prepare('SELECT * FROM invite_tokens WHERE token = ?');
     const invite = inviteStmt.get(inviteToken);
 
     if (!invite) {
-      return res.status(403).json({ error: 'Invalid or already used invitation' });
+      return res.status(403).json({ error: 'Invalid invitation token' });
     }
 
     // Check if username is already taken
@@ -53,9 +53,8 @@ router.post('/signup', (req, res) => {
     `);
     const result = insertUserStmt.run(username, inviteToken, now, sessionToken);
 
-    // Mark invitation as used
-    const markUsedStmt = db.prepare('UPDATE invite_tokens SET used = 1, used_at = ? WHERE token = ?');
-    markUsedStmt.run(now, inviteToken);
+    // Note: Invitation tokens are now REUSABLE - not marking as used
+    // This allows the admin to share one QR code with multiple people
 
     res.status(201).json({
       success: true,

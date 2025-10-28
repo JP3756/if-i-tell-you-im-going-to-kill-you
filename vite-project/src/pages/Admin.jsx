@@ -79,8 +79,8 @@ function Admin() {
             <div>
               <h3 className="text-gray-200 font-semibold mb-1">You Are the Only Admin</h3>
               <p className="text-gray-400 text-sm">
-                Only you have the master token. Each QR code you generate is single-use 
-                and can be shared with one person to invite them to Clandestine.
+                Only you have the master token. Each QR code you generate is <strong>reusable</strong> 
+                and can be shared with multiple people to invite them.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ function Admin() {
               className="btn-primary w-full"
               disabled={loading}
             >
-              {loading ? 'Generating...' : 'Generate Single-Use QR Code'}
+              {loading ? 'Generating...' : 'Generate Reusable QR Code'}
             </button>
           </form>
         </div>
@@ -135,7 +135,7 @@ function Admin() {
                 ✓ CREDENTIAL GENERATED
               </h3>
               <p className="text-gray-400 text-xs font-mono">
-                SINGLE-USE AUTHENTICATION TOKEN · DISTRIBUTE TO <strong className="text-gray-300">ONE OPERATIVE</strong> ONLY
+                REUSABLE AUTHENTICATION TOKEN · DISTRIBUTE TO <strong className="text-gray-300">MULTIPLE OPERATIVES</strong>
               </p>
             </div>
 
