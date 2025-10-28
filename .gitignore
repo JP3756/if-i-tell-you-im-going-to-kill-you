@@ -12,7 +12,6 @@ vite-project/.env
 
 # Database
 *.db
-*.json
 backend/*.db
 backend/clandestine.json
 
